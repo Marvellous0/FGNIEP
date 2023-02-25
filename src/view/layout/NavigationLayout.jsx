@@ -109,7 +109,7 @@ const NavigationLayout = ({ children }) => {
                         <div className='h-[40px] w-[30%] flex gap-2 items-center'>
                             <img src={userImg} alt="userImage" className="h-[100%] w-[40px] rounded-full" />
                             <h6>Marvellous Adeoye</h6>
-                            <RiArrowDropDownLine size={25} />
+                            <RiArrowDropDownLine className='cursor-pointer' size={25} />
                         </div>
                     </div>
                 </div>
