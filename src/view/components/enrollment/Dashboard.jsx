@@ -22,6 +22,13 @@ const Dashboard = () => {
         dispatch(selectEmployee(employeeId))
         navigate("/biodata");
     }
+
+    const employeeRep = {
+        id: '',
+        name: "",
+        date: "",
+        status: "",
+    }
     return (
         <div
             className={`flex flex-col items-center gap-y-5 w-full min-h-fit px-[30px]`}
@@ -60,7 +67,7 @@ const Dashboard = () => {
                                         } border-[#F0F3F7]`}
                                     key={Math.random()}
                                 >
-                                    {Object.keys(employee)
+                                    {Object.keys(employeeRep)
                                         .filter(m=> m !== "id")
                                         .map((key) => (
                                             <td
@@ -80,7 +87,7 @@ const Dashboard = () => {
                                                     </div>
                                                 }
                                                 {key === "name" &&
-                                                    <span>{`${employee?.biodata?.lastName} ${employee?.biodata?.firstName}`}</span>
+                                                    <span>{`${employee.biodata.lastName} ${employee.biodata.firstName}`}</span>
                                                 }
                                             </td>
                                         ))}
