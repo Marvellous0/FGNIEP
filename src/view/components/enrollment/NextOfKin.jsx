@@ -2,10 +2,15 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
+import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineArrowBackIos, MdEdit } from 'react-icons/md';
+import { addEmployeeNextOfKin } from "../../../application/store/actions/user";
 
 const NextOfKin = () => {
-
+    const user = useSelector(state => state.user);
+    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const dispatch = useDispatch();
 
     const residenceLga = [
         { key: "Residence LGA", value: '' },
@@ -19,14 +24,14 @@ const NextOfKin = () => {
         { key: "Ondo", value: "ondo" },
     ];
     const initialValues = {
-        fullName: '',
-        relationship: '',
-        phoneNumber: '',
-        stateOfResidence: '',
-        residenceLga: '',
-        resStreetName: '',
-        resHouseNumber: '',
-        resCity: '',
+        fullName: employee?.nextOfKin?.fullName ?? '',
+        relationship: employee?.nextOfKin?.relationship ?? '',
+        phoneNumber: employee?.nextOfKin?.phoneNumber ?? '',
+        stateOfResidence: employee?.nextOfKin?.stateOfResidence ?? '',
+        residenceLga: employee?.nextOfKin?.residenceLga ?? '',
+        resStreetName: employee?.nextOfKin?.resStreetName ?? '',
+        resHouseNumber: employee?.nextOfKin?.resHouseNumber ?? '',
+        resCity: employee?.nextOfKin?.resCity ?? '',
     }
 
 
@@ -94,21 +99,34 @@ const NextOfKin = () => {
 
 
     const registerNextOfKin = (values, onSubmitProps) => {
-        const biodata = {
-            participantTypeName: 'guest',
-            lastName: values.lastName,
-            firstName: values.firstName,
-            otherName: values.otherName,
+        const nextOfKin = {
+            fullName: values.fullName,
+            relationship: values.relationship,
             phoneNumber: values.phoneNumber,
-            email: values.emailAddress,
-            gender: values.gender,
-            address: values.address,
-            photo: null
+            stateOfResidence: values.stateOfResidence,
+            residenceLga: values.residenceLga,
+            resStreetName: values.resStreetName,
+            resHouseNumber: values.resHouseNumber,
+            resCity: values.resCity,
+
         }
+         const payload = {
+            employeeId: employee.id,
+            nextOfKin
+        }
+        dispatch(addEmployeeNextOfKin(payload));
+        console.log("nextOfKin", nextOfKin)
     }
     return (
         <>
-            <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">NEXT OF KIN</h4>
+            <div className="flex gap-3">
+                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">NEXT OF KIN</h4>
+                {
+                    !isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
+                        <MdEdit size={20} />
+                    </div>
+                }
+            </div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -132,11 +150,11 @@ const NextOfKin = () => {
 
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value="SUBMIT" className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
-                            <div onClick={()=> window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
-                                <MdOutlineArrowBackIos size={20}  />
+                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowBackIos size={20} />
                             </div>
-                            
+
                         </div>
 
                     </Form>

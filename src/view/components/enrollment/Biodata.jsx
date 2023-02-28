@@ -2,9 +2,15 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
+import { useDispatch, useSelector } from "react-redux";
+import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { addEmployeeBiodata } from "../../../application/store/actions/user";
 
 const Biodata = () => {
+    const user = useSelector(state => state.user);
+    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const dispatch = useDispatch();
 
     const title = [
         { key: "Title", value: '' },
@@ -52,27 +58,27 @@ const Biodata = () => {
         { key: "Kajola", value: "Kajola" },
         { key: "Ojo", value: "Ojo" },
     ];
-    const initialValues = {
-        firstName: '',
-        lastName: '',
-        otherName: '',
-        dob: '',
-        emailAddress: '',
-        phoneNumber: '',
-        gender: '',
-        title: '',
-        maritalStatus: '',
-        stateOfOrigin: '',
-        lga: '',
-        stateOfResidence: '',
-        residenceLga: '',
-        resStreetName: '',
-        resHouseNumber: '',
-        resCity: '',
-        perStreetName: '',
-        perHouseNumber: '',
-        perCity: '',
-    }
+    const [initialValues, setInitialValues] = useState({
+        firstName: employee?.biodata?.firstName ?? "",
+        lastName: employee?.biodata?.lastName ?? "",
+        otherName: employee?.biodata?.otherName ?? "",
+        dob: employee?.biodata?.dob ?? "",
+        emailAddress: employee?.biodata?.emailAddress ?? "",
+        phoneNumber: employee?.biodata?.phoneNumber ?? "",
+        gender: employee?.biodata?.gender ?? "",
+        title: employee?.biodata?.title ?? "",
+        maritalStatus: employee?.biodata?.maritalStatus ?? "",
+        stateOfOrigin: employee?.biodata?.stateOfOrigin ?? "",
+        lga: employee?.biodata?.lga ?? "",
+        stateOfResidence: employee?.biodata?.stateOfResidence ?? "",
+        residenceLga: employee?.biodata?.residenceLga ?? "",
+        resStreetName: employee?.biodata?.resStreetName ?? "",
+        resHouseNumber: employee?.biodata?.resHouseNumber ?? "",
+        resCity: employee?.biodata?.resCity ?? "",
+        perStreetName: employee?.biodata?.perStreetName ?? "",
+        perHouseNumber: employee?.biodata?.perHouseNumber ?? "",
+        perCity: employee?.biodata?.perCity ?? "",
+    })
 
 
     const validationSchema = Yup.object({
@@ -242,14 +248,28 @@ const Biodata = () => {
             perStreetName: values.perStreetName,
             perHouseNumber: values.perHouseNumber,
             perCity: values.perCity,
-            date : new Date(),
+            date: new Date(),
         }
-
-        console.log("bio", biodata)
+        const payload = {
+            employeeId: employee.id,
+            data: biodata,
+        }
+        console.log(payload.data.title,)
+        dispatch(addEmployeeBiodata(payload));
+        // console.log("bio", biodata)
     }
     return (
         <>
-            <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">BIODATA</h4>
+            <div className="flex gap-3">
+                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">BIODATA</h4>
+                {
+                    isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
+                        <MdEdit size={20} />
+                    </div>
+                }
+            </div>
+
+
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -263,6 +283,7 @@ const Biodata = () => {
                                 <FormikControl
                                     key={index * 0.5}
                                     label={d.label}
+                                    disabled={isInputDisabled}
                                     name={d.name}
                                     type={d?.type}
                                     placeholder={d.placeholder}
@@ -280,6 +301,7 @@ const Biodata = () => {
                                         key={index * 0.5}
                                         label={d.label}
                                         name={d.name}
+                                        disabled={isInputDisabled}
                                         type={d?.type}
                                         placeholder={d.placeholder}
                                         options={d?.options}
@@ -295,6 +317,7 @@ const Biodata = () => {
                                         key={index * 0.5}
                                         label={d.label}
                                         name={d.name}
+                                        disabled={isInputDisabled}
                                         type={d?.type}
                                         placeholder={d.placeholder}
                                         options={d?.options}
@@ -305,11 +328,11 @@ const Biodata = () => {
                             </div>
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value="SUBMIT" className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
-                            <div onClick={()=> window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
-                                <MdOutlineArrowBackIos size={20}  />
+                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowBackIos size={20} />
                             </div>
-                            
+
                         </div>
 
                     </Form>

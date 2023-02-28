@@ -2,7 +2,10 @@ import * as userActions from '../actions/user';
 
 const initialState = {
     username: "Hamzat Mazeedah",
+    email: "mazeedah@gmail.com",
+    password: "test",
     enrollingUser: null,
+    role: "user",
     employees: [
         {
             id: 1,
@@ -27,7 +30,8 @@ const initialState = {
                 stateOfResidence: "ondo",
                 title: "MR.",
             },
-            status: "Progress"
+            status: "Progress",
+
         },
         {
             id: 2,
@@ -57,7 +61,7 @@ const initialState = {
         {
             id: 3,
             biodata: {
-                  dob: "2023-02-09",
+                dob: "2023-02-09",
                 emailAddress: "mazeedahhamzat@gmail.com",
                 firstName: "Bisi",
                 gender: "male",
@@ -79,28 +83,27 @@ const initialState = {
             },
             status: "Enrolled"
         },
-    ]
+    ] 
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-
         case (userActions.SELECT_EMPLOYEE_TO_ENROLL):
             return { ...state, enrollingUser: action.payload };
         case (userActions.ADD_EMPLOYEE_BIODATA):
-            const employee = state.employees.find(e => e.id == action.payload.employeeId);
-            employee = { ...employee, biodata: action.payload.data }
+            let employee = state.employees.find(e => e.id == action.payload.employeeId);
+            employee = { ...employee, biodata: action.payload.data };
             return { ...state };
         case (userActions.ADD_EMPLOYEE_NEXTOFKIN):
-            const employee2 = state.employees.find(e => e.id == action.payload.employeeId);
+            let employee2 = state.employees.find(e => e.id == action.payload.employeeId);
             employee2 = { ...employee2, nextOfKin: action.payload.data }
             return { ...state };
         case (userActions.ADD_EMPLOYEE_SERVICE_RECORD):
-            const employee3 = state.employees.find(e => e.id == action.payload.employeeId);
+            let employee3 = state.employees.find(e => e.id == action.payload.employeeId);
             employee3 = { ...employee3, serviceRecord: action.payload.data }
             return { ...state };
         case (userActions.ADD_EMPLOYEE_FINANCIAL_RECORD):
-            const employee4 = state.employees.find(e => e.id == action.payload.employeeId);
+            let employee4 = state.employees.find(e => e.id == action.payload.employeeId);
             employee4 = { ...employee4, financialRecord: action.payload.data }
             return { ...state };
         default:

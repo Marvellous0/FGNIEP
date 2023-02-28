@@ -34,7 +34,7 @@ const DropdownInput = (props) => {
       <Field name={name} >
         {({ field }) =>
 
-          <Dropdown {...field} >
+          <Dropdown {...field} {...rest}>
             {options.map((option) => (
               <Option key={option.value} value={option.value}> {option.key}</Option>
             ))}

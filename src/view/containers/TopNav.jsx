@@ -1,7 +1,7 @@
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import userImg from '../../application/assets/images/ayra.png';
 import { BiMenuAltLeft } from 'react-icons/bi';
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 const TopNav = ({ isNavHidden, setIsNavHidden }) => {
 
@@ -9,13 +9,13 @@ const TopNav = ({ isNavHidden, setIsNavHidden }) => {
     const enrolling = user.employees.find(e => e.id == user.enrollingUser)
 
     return (
-        <div className='h-[80px] flex items-center px-[15px] gap-2  bg-[white] '>
+        <div className='h-[80px] w-full flex items-center px-[15px] gap-2 bg-[white]'>
             {
                 isNavHidden &&
-                <BiMenuAltLeft size={20} className="cursor-pointer md:hidden" onClick={() => setIsNavHidden(false)} />
+                <BiMenuAltLeft size={20} className="cursor-pointer md:hidden" onClick={() => setIsNavHidden(!isNavHidden)} />
             }
 
-            <div className=" flex-1">
+            <div className="flex-1">
                 {
                     enrolling &&
                     <p className='text-[14px] md:text-[16px] font-[500]'>

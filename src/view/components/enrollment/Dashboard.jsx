@@ -2,25 +2,38 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import { igate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmployee } from "../../../application/store/actions/user";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Dashboard = () => {
-    
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
     const user = useSelector(state => state.user);
+    const enrolling = user.employees.find(e => e.id == user.enrollingUser);
     const [loading, setLoading] = useState(false);
     const [cleanData, setCleanData] = useState(user.employees);
-    console.log(cleanData)
-  
+
     const headings = ["Name", "Date", "Status", "Action"];
 
-    const update =(employeeId)=>{
+    const update = (employeeId) => {
         dispatch(selectEmployee(employeeId))
-        navigate("/biodata");
+        if (enrolling?.financialRecord !== undefined) {
+            navigate("/summary");
+        }
+        else if (enrolling?.serviceRecord !== undefined) {
+            navigate("/financialrecord");
+        }
+        else if (enrolling?.nextOfKin !== undefined) {
+            navigate("/servicerecord");
+        }
+        else if (enrolling?.biodata !== undefined) {
+            navigate("/nextofkin");
+        }
+        else{
+            navigate("/biodata");
+        }
     }
 
     const employeeRep = {
@@ -35,7 +48,7 @@ const Dashboard = () => {
         >
             <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">EMPLOYEES</h4>
             <div className="flex justify-end w-full">
-                <span className="px-5 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={()=> navigate("/biodata")}>+ Add Employee</span>
+                <span className="px-5 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/biodata")}>+ Add Employee</span>
             </div>
             <div
                 style={{ scrollBehavior: "smooth" }}
@@ -68,7 +81,7 @@ const Dashboard = () => {
                                     key={Math.random()}
                                 >
                                     {Object.keys(employeeRep)
-                                        .filter(m=> m !== "id")
+                                        .filter(m => m !== "id")
                                         .map((key) => (
                                             <td
                                                 key={Math.random()}
@@ -93,8 +106,8 @@ const Dashboard = () => {
                                         ))}
                                     <td className="">
                                         <button
-                                        id={employee["id"]}
-                                         className={`font-[500]  ${employee["status"] == "Finished" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] == "Finished"} onClick={(e)=> update(e.target.id)}>
+                                            id={employee["id"]}
+                                            className={`font-[500] flex items-center mt-2 ${employee["status"] == "Finished" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] == "Finished"} onClick={(e) => update(e.target.id)}>
                                             Update
                                         </button>
                                     </td>

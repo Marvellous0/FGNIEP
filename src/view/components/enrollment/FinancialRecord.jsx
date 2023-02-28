@@ -2,11 +2,15 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
+import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { useDispatch, useSelector } from "react-redux";
+import { addEmployeeFinancialRecord } from "../../../application/store/actions/user";
 
 const FinancialRecord = () => {
-
-
+    const user = useSelector(state => state.user);
+    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const dispatch = useDispatch();
     const banks = [
         { key: "Bank", value: '' },
         { key: "GUARATEE TRUST BANK", value: "Kajola" },
@@ -18,11 +22,11 @@ const FinancialRecord = () => {
         { key: "GTB-AM PENSIONS LIMITED", value: "Kajola" },
     ];
     const initialValues = {
-        payrollId: '',
-        accountNumber: '',
-        bank: '',
-        pfa: '',
-        pfaPin: '',
+        payrollId: employee?.financialRecord?.payrollId ?? '',
+        accountNumber: employee?.financialRecord?.accountNumber ?? '',
+        bank: employee?.financialRecord?.bank ?? '',
+        pfa: employee?.financialRecord?.pfa ?? '',
+        pfaPin: employee?.financialRecord?.pfaPin ?? '',
     }
 
 
@@ -53,7 +57,7 @@ const FinancialRecord = () => {
             control: "input",
             placeholder: "Enter Account Number",
         },
-       {
+        {
             label: "pfa",
             name: "pfa",
             control: "select",
@@ -65,26 +69,35 @@ const FinancialRecord = () => {
             control: "input",
             placeholder: "Enter Pfa Pin",
         },
-       
+
     ];
 
 
     const financialRecord = (values, onSubmitProps) => {
-        const biodata = {
-            participantTypeName: 'guest',
-            lastName: values.lastName,
-            firstName: values.firstName,
-            otherName: values.otherName,
-            phoneNumber: values.phoneNumber,
-            email: values.emailAddress,
-            gender: values.gender,
-            address: values.address,
-            photo: null
+        const financialRecord = {
+            payrollId: values.payrollId,
+            accountNumber: values.accountNumber,
+            bank: values.bank,
+            pfa: values.pfa,
+            pfaPin: values.pfaPin,
         }
+        const payload = {
+            employeeId: employee.id,
+            financialRecord
+        }
+        dispatch(addEmployeeFinancialRecord(payload));
+        console.log("financialRecord", financialRecord)
     }
     return (
         <>
-            <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">FINANCIAL RECORD</h4>
+            <div className="flex gap-3">
+                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">FINANCIAL RECORD</h4>
+                {
+                    !isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white] rounded-md  cursor-pointer p-[10px]">
+                        <MdEdit size={20} />
+                    </div>
+                }
+            </div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -108,11 +121,11 @@ const FinancialRecord = () => {
 
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value="SUBMIT" className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
-                            <div onClick={()=> window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
-                                <MdOutlineArrowBackIos size={20}  />
+                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowBackIos size={20} />
                             </div>
-                            
+
                         </div>
 
                     </Form>

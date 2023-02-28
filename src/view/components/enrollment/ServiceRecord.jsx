@@ -2,9 +2,16 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from 'react-icons/md';
+import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { useDispatch, useSelector } from "react-redux";
+import { addEmployeeServiceRecord } from "../../../application/store/actions/user";
 
 const ServiceRecord = () => {
+    const user = useSelector(state => state.user);
+    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const dispatch = useDispatch();
+
     const jobTitle = [
         { key: "Job Title", value: '' },
         { key: "LECTURER", value: "Kajola" },
@@ -36,16 +43,16 @@ const ServiceRecord = () => {
     ];
 
     const initialValues = {
-        jobTitle: '',
-        institution: '',
-        department: '',
-        dateOfFirstAppointment: '',
-        dateOfLastPromotion: '',
-        cadre: '',
-        staffNumber: '',
-        salaryStructure: '',
-        gradeLevel: '',
-        step: '',
+        jobTitle: employee?.serviceRecord?.jobTitle ?? '',
+        institution: employee?.serviceRecord?.institution ?? '',
+        department: employee?.serviceRecord?.department ?? '',
+        dateOfFirstAppointment: employee?.serviceRecord?.dateOfFirstAppointment ?? '',
+        dateOfLastPromotion: employee?.serviceRecord?.dateOfLastPromotion ?? '',
+        cadre: employee?.serviceRecord?.cadre ?? '',
+        staffNumber: employee?.serviceRecord?.staffNumber ?? '',
+        salaryStructure: employee?.serviceRecord?.salaryStructure ?? '',
+        gradeLevel: employee?.serviceRecord?.gradeLevel ?? '',
+        step: employee?.serviceRecord?.step ?? '',
     }
 
 
@@ -87,7 +94,7 @@ const ServiceRecord = () => {
             type: "date",
             placeholder: "Date of First Appointment",
         },
-         {
+        {
             label: "date Of Last Promotion",
             name: "dateOfLastPromotion",
             control: "input",
@@ -128,21 +135,34 @@ const ServiceRecord = () => {
 
 
     const registerServiceRecord = (values, onSubmitProps) => {
-        const biodata = {
-            participantTypeName: 'guest',
-            lastName: values.lastName,
-            firstName: values.firstName,
-            otherName: values.otherName,
-            phoneNumber: values.phoneNumber,
-            email: values.emailAddress,
-            gender: values.gender,
-            address: values.address,
-            photo: null
+        const serviceRecord = {
+            jobTitle: values.jobTitle,
+            institution: values.institution,
+            department: values.department,
+            dateOfFirstAppointment: values.dateOfFirstAppointment,
+            dateOfLastPromotion: values.dateOfLastPromotion,
+            cadre: values.cadre,
+            staffNumber: values.staffNumber,
+            salaryStructure: values.salaryStructure,
+            gradeLevel: values.gradeLevel,
+            step: values.step,
         }
+        const payload = {
+            employeeId: employee.id,
+            serviceRecord
+        }
+        dispatch(addEmployeeServiceRecord(payload));
     }
     return (
         <>
-            <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">SERVICE RECORD</h4>
+            <div className="flex gap-3">
+                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">SERVICE RECORD</h4>
+                {
+                    !isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
+                        <MdEdit size={20} />
+                    </div>
+                }
+            </div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -165,8 +185,8 @@ const ServiceRecord = () => {
                             ))}
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value="SUBMIT" className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
-                            <div onClick={()=> window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
                         </div>
