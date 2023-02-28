@@ -3,13 +3,18 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    fontFamily: {
+      'poppins': ['Poppins', 'sans-serif'],
+      'montserrat': ['Montserrat', 'sans-serif'] 
+    },
     extend: {
       colors: {
-        "theme-color": "#8d98af",
-        "theme-bgcolor": "#c7ede1",
-        "theme-blackcolor": "#081131",
+        "primary": "#45c49c",
+        "secondary": "#f8fafb",
+        "gray": "#081131",
       }
+      
     },
   },
-  plugins: [],
+  plugins: [], 
 }
