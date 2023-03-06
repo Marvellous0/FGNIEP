@@ -8,8 +8,8 @@ const FormikControl = ({ control, ...rest }) => {
     switch (control) {
         case "input":
             return <MainInput {...rest} />;
-        case "login":
-            // return <LoginInput {...rest}/>;
+        case "textarea":
+            return <textarea {...rest}/>;
         case "search":
             return <SearchInput {...rest}/>;
         case "select":

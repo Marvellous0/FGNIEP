@@ -12,16 +12,16 @@ import PfaPage from "./Pfa";
 import UserPage from "./User";
 import { useSelector } from "react-redux";
 import CreatePfaPage from "./CreatePfa";
+// import AddUniversity from "../components/admin/University/AddUniversity";
+// import AddBank from "../components/admin/Bank/AddBank";
 
 
 const Router = () => {
   const loginParams = ["/", "/login"]
   const adminParams = ["/admindashboard", "admindashboard/university"]
   const user = useSelector(state => state.user);
-  const employee = user.employees.find(e => e.id == user.enrollingUser);
 
  
-
   return (
     <HashRouter>
       <Routes>
@@ -37,6 +37,12 @@ const Router = () => {
         {
           <Route path={"/admindashboard/pfa"} element={<PfaPage/>} ></Route>
         }
+        {/* {
+          <Route path={"/university/add"} element={<AddUniversity/>} ></Route>
+        }
+         {
+          <Route path={"/bank/add"} element={<AddBank/>} ></Route>
+        } */}
         {
           <Route path={"/pfa/add"} element={<CreatePfaPage/>} ></Route>
         }

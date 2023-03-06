@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { AiOutlineBank, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-const headings = ["Name", "Abbreviation", "Created"];
+const headings = ["Name", "Abbreviation", "Created", "Action"];
 
 const universityRep = {
     id: '',
     name: "",
     abbr: "",
     created: "",
+    status: "",
 }
 
 const universities = [
@@ -40,6 +43,7 @@ const universities = [
 
 const University = () => {
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div
@@ -49,6 +53,9 @@ const University = () => {
                 style={{ scrollBehavior: "smooth" }}
                 className={`bg-white flex flex-col rounded-t-lg border border-[#F0F3F7] relative  overflow-y-hidden overflow-x-scroll gap-y-5 md:w-full w-[100vw] scrollbar-thumb-gray-300 scrollbar-track-gray-900`}
             >
+                <div className="mx-4 mt-[30px] flex gap-2 rounded-md">
+                    <span className="px-3 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/university/add")}>+ Create</span>
+                </div>
                 <div className="flex gap-2 items-center p-2 md:p-3">
                     <AiOutlineBank />
                     <p>List Of All Universities</p>
@@ -91,10 +98,21 @@ const University = () => {
                                                     </span>
                                                 }
                                                 {key === "abbr" &&
-                                                        <span>{university.abbr.toUpperCase()}</span>
+                                                    <span>{university.abbr.toUpperCase()}</span>
                                                 }
                                                 {key === "created" &&
                                                     <span>{university.created}</span>
+                                                }
+                                                {key === "status" &&
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="rounded-md text-white bg-primary p-2 cursor-pointer">
+                                                            <FaEdit />
+                                                        </div>
+
+                                                        <div className="rounded-md text-white bg-[red] p-2 cursor-pointer">
+                                                            <FaTrash />
+                                                        </div>
+                                                    </div>
                                                 }
                                             </td>
                                         ))}
