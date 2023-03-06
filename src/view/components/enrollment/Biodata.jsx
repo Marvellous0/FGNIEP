@@ -254,9 +254,7 @@ const Biodata = () => {
             employeeId: employee.id,
             data: biodata,
         }
-        console.log(payload.data.title,)
         dispatch(addEmployeeBiodata(payload));
-        // console.log("bio", biodata)
     }
     return (
         <>

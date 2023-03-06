@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineBank, AiOutlineLoading3Quarters } from "react-icons/ai";
+import {MdAdd} from 'react-icons/md'
+import { useNavigate } from "react-router-dom";
 
 const headings = ["Name", "Created"];
 
@@ -35,6 +37,7 @@ const pfas = [
 
 const Pfa = () => {
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <div
@@ -44,7 +47,11 @@ const Pfa = () => {
                 style={{ scrollBehavior: "smooth" }}
                 className={`bg-white flex flex-col rounded-t-lg border border-[#F0F3F7] relative  overflow-y-hidden overflow-x-scroll gap-y-5 md:w-full w-[100vw] scrollbar-thumb-gray-300 scrollbar-track-gray-900`}
             >
-                <div className="flex gap-2 items-center p-2 md:p-3">
+                <div className="mx-4 mt-[30px] flex gap-2 rounded-md">
+                    <button className="text-center bg-primary font-[500] px-[20px] py-[10px] cursor-pointer text-white" onClick={() => navigate("/pfa/add")}><span className="text-[19px]">+</span> CREATE</button>
+                </div>
+
+                <div className="flex gap-2 items-center p-2">
                     <AiOutlineBank />
                     <p>All Pension Institutions</p>
                 </div>

@@ -6,17 +6,15 @@ import { AiOutlineBank } from 'react-icons/ai'
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TfiMenuAlt } from 'react-icons/tfi'
-import { useState } from 'react';
 
 const SideNav = ({ isNavHidden, setIsNavHidden }) => {
     const user = useSelector(state => state.user);
     const location = useLocation();
     const navigate = useNavigate();
     const activeSideOption = location.pathname.split("/")[1];
-    const employee = user.employees.find(e => e.id == user.enrollingUser);
 
     const changeActiveSideOption = (link) => {
-        navigate(link);
+        navigate(link)
         if (!isNavHidden) setIsNavHidden(true);
 
     }
@@ -120,7 +118,7 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
             <div className='mt-4 flex flex-col gap-3'>
                 {
                     navOptions.map((n, index) =>
-                        <div key={index} className={`flex font-poppins items-center px-3 text-[15px]  text-[#8d98af] ${activeSideOption == n.action ? `rounded-md h-[10%]  text-[#45c49c] bg-[#c7ede1]  hover:opacity-[100%] items-center` : ""}`} onClick={(e) => { changeActiveSideOption(n.link) }}>
+                        <div key={index} className={`flex font-poppins items-center px-3 text-[15px]  text-[#8d98af] ${activeSideOption == n.action ? `rounded-md h-[10%]  text-[] bg-[#c7ede1]  hover:opacity-[100%] items-center` : ""}`} onClick={(e) => { changeActiveSideOption(n.link) }}>
                             <n.icon size={20} />
                             <span className="tracking-[0.07em] p-3 cursor-pointer transition-all font-[500] duration-300 text-[14px]">{n.displayText}</span>
                         </div>

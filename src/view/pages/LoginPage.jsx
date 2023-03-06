@@ -10,11 +10,12 @@ const LoginPage = () => {
     const [role, setRole] = useState('user')
 
     const setPage = () => {
-        setRole(role);
-        if (user.role == "admin" && user.email == email && user.password == password) {
+        if (user.email == email && user.password == password) {
+            setRole("admin");
             navigate("/admindashboard/university")
         }
-        else {
+        else if (user.email2 == email && user.password2 == password) {
+            setRole("user");
             navigate("/dashboard")
         }
     }

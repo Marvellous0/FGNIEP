@@ -5,7 +5,7 @@ const initialState = {
     email: "mazeedah@gmail.com",
     password: "test",
     enrollingUser: null,
-    role: "user",
+    role: "admin",
     employees: [
         {
             id: 1,
@@ -83,8 +83,9 @@ const initialState = {
             },
             status: "Enrolled"
         },
-    ] 
+    ]
 }
+
 
 export default (state = initialState, action) => {
     switch (action.type) {
