@@ -3,45 +3,49 @@ import { AiOutlineBank, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-const headings = ["Name", "Abbreviation", "Created", "Action"];
+const headings = ["Name", "Capacity", "Address", "Action"];
 
-const universityRep = {
+const mdaRep = {
     id: '',
     name: "",
-    abbr: "",
-    created: "",
+    capacity: "",
+    address: "",
     status: "",
 }
 
-const universities = [
+const mdas = [
     {
         id: 1,
         name: "ABUBAKAR TAFAWA BALEWA UNIVERSITY",
-        abbr: "ATBU",
+        capacity: 1,
+        address: "5, Aaya Road, Camp",
         created: "09 November 2022"
     },
     {
         id: 2,
         name: "federal university of agriculture",
-        abbr: "funaab",
-        created: "09 November 2022"
+        capacity: 2,
+        address: "8, Tejumola Street, Camp",
+        created: "17 April 2022"
     },
     {
         id: 3,
         name: "obafemi awolowo university",
-        abbr: "oau",
+        capacity: 3,
+        address: "5, Aaya Road, Camp",
         created: "09 November 2022"
     },
     {
         id: 4,
         name: "lasu state university",
-        abbr: "lasu",
+        capacity: 4,
+        address: "8, Tejumola Street, Camp",
         created: "09 November 2022"
     },
 ]
 
 
-const University = () => {
+const Mda = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -54,11 +58,11 @@ const University = () => {
                 className={`bg-white flex flex-col rounded-t-lg border border-[#F0F3F7] relative  overflow-y-hidden overflow-x-scroll gap-y-5 md:w-full w-[100vw] scrollbar-thumb-gray-300 scrollbar-track-gray-900`}
             >
                 <div className="mx-4 mt-[30px] flex gap-2 rounded-md">
-                    <span className="px-3 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/university/add")}>+ Create</span>
+                    <span className="px-3 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/mda/add")}>+ Create</span>
                 </div>
                 <div className="flex gap-2 items-center p-2 md:p-3">
                     <AiOutlineBank />
-                    <p>List Of All Universities</p>
+                    <p>List Of All MDA</p>
                 </div>
                 <table
                     style={{ borderSpacing: "1rem" }}
@@ -79,14 +83,14 @@ const University = () => {
                             <div className="absolute top-[50%] left-[50%] -translate-x-[50%]">
                                 <AiOutlineLoading3Quarters className="inline animate-spin" />
                             </div>
-                        ) : universities && universities.length ? (
-                            universities.map((university, index) => (
+                        ) : mdas && mdas.length ? (
+                            mdas.map((mda, index) => (
                                 <tr
-                                    className={`align-top ${index === universities.length - 1 ? "" : "border-b"
+                                    className={`align-top ${index === mdas.length - 1 ? "" : "border-b"
                                         } border-[#F0F3F7]`}
                                     key={Math.random()}
                                 >
-                                    {Object.keys(universityRep)
+                                    {Object.keys(mdaRep)
                                         .filter(m => m !== "id")
                                         .map((key) => (
                                             <td
@@ -94,14 +98,14 @@ const University = () => {
                                                 className={`py-3 px-5 overflow-hidden font-normal text-sm text-ellipsis leading-5`}
                                             >
                                                 {key === "name" &&
-                                                    < span >{university.name.toUpperCase()}
+                                                    < span >{mda.name.toUpperCase()}
                                                     </span>
                                                 }
                                                 {key === "abbr" &&
-                                                    <span>{university.abbr.toUpperCase()}</span>
+                                                    <span>{mda.abbr.toUpperCase()}</span>
                                                 }
                                                 {key === "created" &&
-                                                    <span>{university.created}</span>
+                                                    <span>{mda.created}</span>
                                                 }
                                                 {key === "status" &&
                                                     <div className="flex items-center gap-2">
@@ -121,7 +125,7 @@ const University = () => {
                             ))
                         ) : (
                             <span className="absolute top-[50%] left-[50%] -translate-x-[50%]">
-                                No University listed
+                                No MDA listed
                             </span>
                         )}
                     </tbody>
@@ -132,4 +136,4 @@ const University = () => {
     );
 }
 
-export default University;
+export default Mda;

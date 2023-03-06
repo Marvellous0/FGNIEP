@@ -23,9 +23,9 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
     const navOptions = user?.role == "admin" ?
         [
             {
-                displayText: "University",
-                action: "university",
-                link: "/admindashboard/university",
+                displayText: "MDA",
+                action: "mda",
+                link: "/admindashboard/mda",
                 isActive: true,
                 icon: AiOutlineBank,
             },

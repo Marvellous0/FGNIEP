@@ -1,4 +1,4 @@
-import University from "../components/admin/University";
+import University from "../components/admin/Mda";
 import NavigationLayout from "../layouts/NavigationLayout";
 
 

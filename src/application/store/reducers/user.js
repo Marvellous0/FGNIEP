@@ -5,7 +5,7 @@ const initialState = {
     email: "mazeedah@gmail.com",
     password: "test",
     enrollingUser: null,
-    role: "admin",
+    role: "user",
     employees: [
         {
             id: 1,

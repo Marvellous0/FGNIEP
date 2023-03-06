@@ -11,7 +11,7 @@ const LoginPage = () => {
 
     const setPage = () => {
         if (user.email == email && user.password == password) {           
-            user?.role == "user"? navigate("/dashboard") : navigate("/admindashboard/university") 
+            user?.role == "user"? navigate("/dashboard") : navigate("/admindashboard/mda") 
         }
        
     }

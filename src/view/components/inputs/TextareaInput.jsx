@@ -12,7 +12,7 @@ const TextArea = styled.textarea`
         outline: none;
         padding: 0 0.5em;
         letter-spacing: 0.1em;
-        border: 2px solid ${theme.color};
+        /* border: 2px solid ${theme.color}; */
 
         @media (min-width: ${theme.breakPoint['tablet']}) {
             width: 350px;

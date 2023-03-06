@@ -15,14 +15,14 @@ import CreatePfaPage from "./CreatePfa";
 // import AddUniversity from "../components/admin/University/AddUniversity";
 // import AddBank from "../components/admin/Bank/AddBank";
 import SummaryPage from "./Summary";
-import CreateUniversityPage from "./CreateUniversity";
 import CreateBankPage from "./CreateBank";
 import CreateUserPage from "./CreateUserPage";
+import CreateMdaPage from "./CreateMda";
 
 
 const Router = () => {
   const loginParams = ["/", "/login"]
-  const adminParams = ["/admindashboard", "admindashboard/university"]
+  const adminParams = ["/admindashboard", "admindashboard/mda"]
   const user = useSelector(state => state.user);
 
  
@@ -57,7 +57,7 @@ const Router = () => {
           <Route path={"/pfa/add"} element={<CreatePfaPage/>} ></Route>
         }
         {
-          <Route path={"/university/add"} element={<CreateUniversityPage/>} ></Route>
+          <Route path={"/mda/add"} element={<CreateMdaPage/>} ></Route>
         }
          {
           <Route path={"/admindashboard/user"} element={<UserPage/>} ></Route>
