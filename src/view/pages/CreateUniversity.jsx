@@ -5,56 +5,64 @@ import * as Yup from 'yup';
 import FormikControl from "../components/formik/FormikControl";
 import NavigationLayout from "../layouts/NavigationLayout";
 
-const CreatePfaPage = () => {
+const CreateUniversityPage = () => {
 
     const initialValues = {
-        pfaName : ''
+        universityName : '',
+        universityAbbr: ""
     }
 
 
     const validationSchema = Yup.object({
-        pfaName: Yup.string().required("Pfa Name is required"),
-       
+        universityName: Yup.string().required("university Name is required"),
+        universityAbbr: Yup.string().required("University Abbreviation is required"),
     });
 
     const displayInput = [
         {
-            label: "Pfa name",
-            name: "pfaName",
+            label: "University name",
+            name: "universityName",
             control: "textarea",
-            placeholder: "Enter PFA Name",
+            placeholder: "Enter University Name",
         },
+        {
+            label: "University Abbreviation",
+            name: "universityAbbr",
+            control: "input",
+            placeholder: "Enter University Abbreviation",
+        }
     ];
 
 
-    const createPfa = (values, onSubmitProps) => {
-        const pfa = {
-            pfaName: values.pfaName,
+    const createuniversity = (values, onSubmitProps) => {
+        const university = {
+            universityName: values.universityName,
+            universityAbbr: values.universityAbbr
         }
-        console.log("adding pfa")
+        console.log("adding university")
     }
 
     return (
         <NavigationLayout>
             <div className="flex gap-3">
-                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">Create New Pension Institution</h4>
+                <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">Create New University</h4>
             </div>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={createPfa}
+                onSubmit={createuniversity}
                 validateOnChange={false}
             >
                 {formik => (
                     <Form>
-                        <div className="grid gap-6 pt-4 md:justify-center md:gap-x-[12rem] md:gap-y-8 md:grid-cols-2" >
+                        <div className="grid gap-6 pt-4" >
                             {displayInput.map((d, index) => (
                                 <FormikControl
                                     key={index * 0.5}
-                                    label={d.label}
-                                    name={d.name}
+                                    label={d?.label}
+                                    name={d?.name}
                                     type={d?.type}
-                                    placeholder={d.placeholder}
+                                    placeholder={d?.placeholder}
                                     options={d?.options}
                                     control={d.control}
                                 />
@@ -77,4 +85,4 @@ const CreatePfaPage = () => {
     );
 }
 
-export default CreatePfaPage;
+export default CreateUniversityPage;

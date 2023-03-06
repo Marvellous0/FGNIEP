@@ -69,7 +69,7 @@ const User = () => {
                 className={`bg-white flex flex-col rounded-t-lg border border-[#F0F3F7] relative  overflow-y-hidden overflow-x-scroll gap-y-5 md:w-full w-[100vw] scrollbar-thumb-gray-300 scrollbar-track-gray-900`}
             >
                 <div className="mx-4 mt-[30px] flex gap-2 rounded-md">
-                    <span className="px-3 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/pfa/add")}>+ Create</span>
+                    <span className="px-3 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/user/add")}>+ Create</span>
                 </div>
                 <div className="flex gap-2 items-center p-2 md:p-3">
                     <AiOutlineBank />

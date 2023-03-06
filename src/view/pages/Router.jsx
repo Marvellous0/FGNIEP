@@ -15,6 +15,9 @@ import CreatePfaPage from "./CreatePfa";
 // import AddUniversity from "../components/admin/University/AddUniversity";
 // import AddBank from "../components/admin/Bank/AddBank";
 import SummaryPage from "./Summary";
+import CreateUniversityPage from "./CreateUniversity";
+import CreateBankPage from "./CreateBank";
+import CreateUserPage from "./CreateUserPage";
 
 
 const Router = () => {
@@ -38,6 +41,12 @@ const Router = () => {
         {
           <Route path={"/admindashboard/pfa"} element={<PfaPage/>} ></Route>
         }
+        {
+          <Route path={"/bank/add"} element={<CreateBankPage/>} ></Route>
+        }
+        {
+          <Route path={"/user/add"} element={<CreateUserPage/>} ></Route>
+        }
         {/* {
           <Route path={"/university/add"} element={<AddUniversity/>} ></Route>
         }
@@ -46,6 +55,9 @@ const Router = () => {
         } */}
         {
           <Route path={"/pfa/add"} element={<CreatePfaPage/>} ></Route>
+        }
+        {
+          <Route path={"/university/add"} element={<CreateUniversityPage/>} ></Route>
         }
          {
           <Route path={"/admindashboard/user"} element={<UserPage/>} ></Route>

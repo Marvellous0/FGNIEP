@@ -5,33 +5,63 @@ import * as Yup from 'yup';
 import FormikControl from "../components/formik/FormikControl";
 import NavigationLayout from "../layouts/NavigationLayout";
 
-const CreatePfaPage = () => {
+const CreateUserPage = () => {
+
+    const role = [
+        { key: "Administrator", value: 'Administration' },
+        { key: "Institution Administrator", value: "Institution Administrator" },
+
+    ];
 
     const initialValues = {
-        pfaName : ''
+        fullname: '',
+        email: '',
+        username: '',
+        role: role
     }
 
-
     const validationSchema = Yup.object({
-        pfaName: Yup.string().required("Pfa Name is required"),
-       
+        username: Yup.string().required("Username is required"),
+        role: Yup.string().required("Role is required")
     });
 
     const displayInput = [
         {
-            label: "Pfa name",
-            name: "pfaName",
-            control: "textarea",
-            placeholder: "Enter PFA Name",
+            label: "Full name",
+            name: "fullName",
+            control: "input",
+            placeholder: "Enter Full Name",
+        },
+        {
+            label: "Email Address",
+            name: "emailAddress",
+            control: "input",
+            placeholder: "Enter Email Address Name",
+        },
+        {
+            label: "Username",
+            name: "username",
+            control: "input",
+            placeholder: "Enter Username",
+        },
+        {
+            label: "Role",
+            name: "role",
+            control: "select",
+            placeholder: "Select a Role",
+            options: role
         },
     ];
 
 
-    const createPfa = (values, onSubmitProps) => {
-        const pfa = {
-            pfaName: values.pfaName,
+    const createUser = (values, onSubmitProps) => {
+        const user = {
+            fullname: values.fullname,
+            email: values.email,
+            username: values.username,
+            role: values.role
         }
-        console.log("adding pfa")
+        console.log("adding user")
     }
 
     return (
@@ -42,7 +72,7 @@ const CreatePfaPage = () => {
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={createPfa}
+                onSubmit={createUser}
                 validateOnChange={false}
             >
                 {formik => (
@@ -62,7 +92,7 @@ const CreatePfaPage = () => {
 
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={ "CREATE"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <input value={"CREATE"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
@@ -77,4 +107,4 @@ const CreatePfaPage = () => {
     );
 }
 
-export default CreatePfaPage;
+export default CreateUserPage;
