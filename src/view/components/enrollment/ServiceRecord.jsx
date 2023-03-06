@@ -5,11 +5,13 @@ import FormikControl from "../formik/FormikControl";
 import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployeeServiceRecord } from "../../../application/store/actions/user";
+import services from "../../../ioc/services";
 
 const ServiceRecord = () => {
     const user = useSelector(state => state.user);
     const employee = user.employees.find(e => e.id == user.enrollingUser);
-    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const [isEdit, setIsEdit] = useState(employee?.serviceRecord !== undefined);
+    const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
 
     const jobTitle = [
@@ -149,16 +151,19 @@ const ServiceRecord = () => {
         }
         const payload = {
             employeeId: employee.id,
-            serviceRecord
+            data: serviceRecord,
         }
         dispatch(addEmployeeServiceRecord(payload));
+        services.toast.success("Service Record submitted sucessfully!");
+        setIsEdit(true);
+        setIsInputDisabled(true);
     }
     return (
         <>
             <div className="flex gap-3">
                 <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">SERVICE RECORD</h4>
                 {
-                    !isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
+                    (isEdit && isInputDisabled) && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
                         <MdEdit size={20} />
                     </div>
                 }
@@ -177,6 +182,7 @@ const ServiceRecord = () => {
                                     key={index * 0.5}
                                     label={d.label}
                                     name={d.name}
+                                    disabled={isInputDisabled}
                                     type={d?.type}
                                     placeholder={d.placeholder}
                                     options={d?.options}
@@ -185,7 +191,7 @@ const ServiceRecord = () => {
                             ))}
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>

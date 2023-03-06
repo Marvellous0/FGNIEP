@@ -2,11 +2,14 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import userImg from '../../application/assets/images/ayra.png';
 import { BiMenuAltLeft } from 'react-icons/bi';
 import {  useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
 
 const TopNav = ({ isNavHidden, setIsNavHidden }) => {
 
     const user = useSelector(state => state.user);
     const enrolling = user.employees.find(e => e.id == user.enrollingUser)
+    const [emp, setEmp] = useState(enrolling);
+    useEffect(()=>{console.log("enrolling", enrolling)},[enrolling])
 
     return (
         <div className='h-[80px] w-full flex items-center px-[15px] gap-2 bg-[white]'>

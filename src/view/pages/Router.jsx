@@ -10,6 +10,7 @@ import AdminDashboardPage from "./AdminDashboardPage";
 import BankPage from "./Bank";
 import PfaPage from "./Pfa";
 import UserPage from "./User";
+import SummaryPage from "./Summary";
 
 
 const Router = () => {
@@ -48,6 +49,9 @@ const Router = () => {
         }
         {
           <Route path={"/financialrecord"} element={<FinancialRecordPage/>} ></Route>
+        }
+        {
+          <Route path={"/summary"} element={<SummaryPage/>} ></Route>
         }
         <Route path="*" element={<h1>Error 404</h1>} />
       </Routes>

@@ -91,20 +91,24 @@ export default (state = initialState, action) => {
         case (userActions.SELECT_EMPLOYEE_TO_ENROLL):
             return { ...state, enrollingUser: action.payload };
         case (userActions.ADD_EMPLOYEE_BIODATA):
-            let employee = state.employees.find(e => e.id == action.payload.employeeId);
-            employee = { ...employee, biodata: action.payload.data };
+            const employee = {
+                id: state.employees.length+1,
+                biodata: action.payload.data,
+                status: "Progress"
+            }
+            state.employees.push(employee);
             return { ...state };
         case (userActions.ADD_EMPLOYEE_NEXTOFKIN):
-            let employee2 = state.employees.find(e => e.id == action.payload.employeeId);
-            employee2 = { ...employee2, nextOfKin: action.payload.data }
+            const employee2 = state.employees.find(e => e.id == action.payload.employeeId);
+            employee2.nextOfKin =  action.payload.data;
             return { ...state };
         case (userActions.ADD_EMPLOYEE_SERVICE_RECORD):
-            let employee3 = state.employees.find(e => e.id == action.payload.employeeId);
-            employee3 = { ...employee3, serviceRecord: action.payload.data }
+            const employee3 = state.employees.find(e => e.id == action.payload.employeeId);
+            employee3.serviceRecord = action.payload.data;
             return { ...state };
         case (userActions.ADD_EMPLOYEE_FINANCIAL_RECORD):
-            let employee4 = state.employees.find(e => e.id == action.payload.employeeId);
-            employee4 = { ...employee4, financialRecord: action.payload.data }
+            const employee4 = state.employees.find(e => e.id == action.payload.employeeId);
+            employee4.financialRecord = action.payload.data ;
             return { ...state };
         default:
             return state;
