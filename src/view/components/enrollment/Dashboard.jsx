@@ -19,23 +19,27 @@ const Dashboard = () => {
 
     const update = (employeeId) => {
         dispatch(selectEmployee(employeeId))
-        if (enrolling?.financialRecord !== undefined) {
+        const current = user.employees.find(e => e.id == employeeId)
+        if (current?.financialRecord !== undefined) {
             navigate("/summary");
         }
-        else if (enrolling?.serviceRecord !== undefined) {
+        else if (current?.serviceRecord !== undefined) {
             navigate("/financialrecord");
         }
-        else if (enrolling?.nextOfKin !== undefined) {
+        else if (current?.nextOfKin !== undefined) {
             navigate("/servicerecord");
         }
-        else if (enrolling?.biodata !== undefined) {
+        else if (current?.biodata !== undefined) {
             navigate("/nextofkin");
         }
         else{
             navigate("/biodata");
         }
     }
-
+    const add = () =>{
+        dispatch(selectEmployee(null))
+        navigate("/biodata")
+    }
     const employeeRep = {
         id: '',
         name: "",
@@ -48,7 +52,7 @@ const Dashboard = () => {
         >
             <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">EMPLOYEES</h4>
             <div className="flex justify-end w-full">
-                <span className="px-5 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => navigate("/biodata")}>+ Add Employee</span>
+                <span className="px-5 py-[10px] relative cursor-pointer font-[600] text-[16px] rounded-md h-[10%] text-primary bg-[#c7ede1]" onClick={() => add()}>+ Add Employee</span>
             </div>
             <div
                 style={{ scrollBehavior: "smooth" }}

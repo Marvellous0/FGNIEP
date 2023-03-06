@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import CreatePfaPage from "./CreatePfa";
 // import AddUniversity from "../components/admin/University/AddUniversity";
 // import AddBank from "../components/admin/Bank/AddBank";
+import SummaryPage from "./Summary";
 
 
 const Router = () => {
@@ -63,6 +64,9 @@ const Router = () => {
         }
         {
           <Route path={"/financialrecord"} element={<FinancialRecordPage/>} ></Route>
+        }
+        {
+          <Route path={"/summary"} element={<SummaryPage/>} ></Route>
         }
         <Route path="*" element={<h1>Error 404</h1>} />
       </Routes>

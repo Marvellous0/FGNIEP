@@ -4,12 +4,15 @@ import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
 import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
-import { addEmployeeBiodata } from "../../../application/store/actions/user";
+import { addEmployeeBiodata, selectEmployee } from "../../../application/store/actions/user";
+import { toast } from "react-toastify";
+import services from "../../../ioc/services";
 
 const Biodata = () => {
     const user = useSelector(state => state.user);
     const employee = user.employees.find(e => e.id == user.enrollingUser);
-    const [isInputDisabled, setIsInputDisabled] = useState(employee?.biodata !== undefined);
+    const [isEdit, setIsEdit] = useState(employee?.biodata !== undefined);
+    const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
 
     const title = [
@@ -226,7 +229,6 @@ const Biodata = () => {
             placeholder: "Enter city",
         }
     ];
-
     const registerBiodata = (values, onSubmitProps) => {
         const biodata = {
             firstName: values.firstName,
@@ -251,17 +253,20 @@ const Biodata = () => {
             date: new Date(),
         }
         const payload = {
-            employeeId: employee.id,
             data: biodata,
         }
+        dispatch(selectEmployee(user.employees.length+1));
         dispatch(addEmployeeBiodata(payload));
+        services.toast.success("Biodata Submitted Sucessfully!");
+        setIsEdit(true);
+        setIsInputDisabled(true);
     }
     return (
         <>
             <div className="flex gap-3">
                 <h4 className="font-[600] text-[16px] md:text-[18px] leading-[0.1em] font-montserrat my-[20px]">BIODATA</h4>
                 {
-                    isInputDisabled && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
+                    (isEdit && isInputDisabled) && <div onClick={() => setIsInputDisabled(!isInputDisabled)} className="bg-[white]  rounded-md  cursor-pointer p-[10px]">
                         <MdEdit size={20} />
                     </div>
                 }
@@ -326,7 +331,7 @@ const Biodata = () => {
                             </div>
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isInputDisabled ? "SUBMIT" : "EDIT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
