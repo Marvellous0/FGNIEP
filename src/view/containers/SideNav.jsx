@@ -19,7 +19,6 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
 
     }
 
-    console.log(user.role, "role")
     const navOptions = user?.role == "admin" ?
         [
             {

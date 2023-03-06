@@ -1,19 +1,21 @@
 import { useSelector } from "react-redux";
+import usePrintTag from "../../application/hooks/usePrintTag";
 import NavigationLayout from "../layouts/NavigationLayout";
-
 
 const SummaryPage = () => {
     const user = useSelector(state => state.user);
     const employee = user.employees.find(e => e.id == user.enrollingUser);
     const status = employee?.nextOfKin == undefined;
     const biodata = employee?.biodata;
+    const [currentId, setCurrentId] = usePrintTag();
 
     return (
         <>
             <NavigationLayout>
+
                 <h4 className="font-[600] text-[16px] md:text-[18px] text-center leading-[0.1em] font-montserrat my-[20px]">SUMMARY PAGE</h4>
 
-                <div className="flex flex-wrap py-4 px-1 justify-around">
+                <div className="flex flex-wrap py-4 px-1 justify-around" id="print">
                     <div className="shadow-md md:basis-[40%] shrink text-[12px] h-[450px] w-[300px] md:w-[250px] md:p-5 flex flex-wrap flex-col gap-2 mb-4 p-3">
                         <h5 className="text-center font-bold text-[15px]">BIODATA</h5>
                         <div>
@@ -63,9 +65,10 @@ const SummaryPage = () => {
 
                 </div>
 
-                <div className="flex justify-end my-[30px] gap-[10px]">
-                    <input value={"PRINT"} className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white " type="submit" />
+                <div className="flex justify-end my-[30px] gap-[10px]" onClick={() => setCurrentId("print")}>
+                    <button className="text-center bg-primary py-[10px] px-[20px] font-[500] cursor-pointer text-white">PRINT</button>
                 </div>
+               
             </NavigationLayout>
         </>
 
