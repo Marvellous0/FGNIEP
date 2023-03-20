@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
-import { MdOutlineArrowBackIos, MdEdit } from 'react-icons/md';
+import { MdOutlineArrowBackIos, MdEdit, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { addEmployeeNextOfKin } from "../../../application/store/actions/user";
-import { toast } from "react-toastify";
 import services from "../../../ioc/services";
+import { useNavigate } from "react-router-dom";
 
 const NextOfKin = () => {
     const user = useSelector(state => state.user);
@@ -14,6 +14,7 @@ const NextOfKin = () => {
     const [isEdit, setIsEdit] = useState(employee?.nextOfKin !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const residenceLga = [
         { key: "Residence LGA", value: '' },
@@ -38,15 +39,17 @@ const NextOfKin = () => {
     }
 
 
-    const validationSchema = Yup.object({
-        fullName: Yup.string().required("Full name is required"),
-        relationship: Yup.string().required("Relationship is required"),
-        phoneNumber: Yup.string().required("Phone number is required"),
+    const validationSchema = Yup.object().shape({
+        fullName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("Full name is required"),
+        relationship: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("Relationship is required"),
+        phoneNumber: Yup.string()
+            .matches(/^0\d{10}$/, 'Phone number must be 11 digits and include a leading zero')
+            .required('Phone number is required'),
         stateOfResidence: Yup.string().required("Select State Of Residence!"),
         residenceLga: Yup.string().required("Select Residence LGA!"),
         resStreetName: Yup.string().required("Street name is required!"),
         resHouseNumber: Yup.string().required("House number is required!"),
-        resCity: Yup.string().required("City is required!"),
+        resCity: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("City is required!"),
     });
 
     const displayInput = [
@@ -60,6 +63,7 @@ const NextOfKin = () => {
             label: "phone Number",
             name: "phoneNumber",
             control: "input",
+            type: 'tel',
             placeholder: "Input Phone No.",
         },
         {
@@ -90,6 +94,7 @@ const NextOfKin = () => {
             label: "house number",
             name: "resHouseNumber",
             control: "input",
+            type: 'number',
             placeholder: "Enter house number",
         },
         {
@@ -113,7 +118,7 @@ const NextOfKin = () => {
             resCity: values.resCity,
 
         }
-         const payload = {
+        const payload = {
             employeeId: employee.id,
             data: nextOfKin,
         }
@@ -138,7 +143,7 @@ const NextOfKin = () => {
                 onSubmit={registerNextOfKin}
                 validateOnChange={false}
             >
-                {formik => (
+                {({ values, handleChange }) => (
                     <Form>
                         <div className="grid gap-6 pt-4 md:justify-center md:gap-x-[12rem] md:gap-y-8 md:grid-cols-2" >
                             {displayInput.map((d, index) => (
@@ -151,16 +156,19 @@ const NextOfKin = () => {
                                     placeholder={d.placeholder}
                                     options={d?.options}
                                     control={d.control}
+
                                 />
                             ))}
 
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed" : "cursor-pointer"} `} type="submit" disabled={isInputDisabled} />
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
-
+                            <div onClick={() => navigate('/servicerecord')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowForwardIos size={20} />
+                            </div>
                         </div>
 
                     </Form>

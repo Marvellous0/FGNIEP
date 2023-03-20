@@ -30,7 +30,7 @@ const initialState = {
                 stateOfResidence: "ondo",
                 title: "MR.",
             },
-            status: "Progress",
+            status: "Incomplete",
 
         },
         {
@@ -56,7 +56,7 @@ const initialState = {
                 stateOfResidence: "ondo",
                 title: "MRS.",
             },
-            status: "Finished"
+            status: "Completed"
         },
         {
             id: 3,
@@ -81,7 +81,7 @@ const initialState = {
                 stateOfResidence: "ondo",
                 title: "DOCTOR.",
             },
-            status: "Enrolled"
+            status: "Incomplete"
         },
     ]
 }
@@ -95,7 +95,7 @@ export default (state = initialState, action) => {
             const employee = {
                 id: state.employees.length+1,
                 biodata: action.payload.data,
-                status: "Progress"
+                status: "Incomplete"
             }
             state.employees.push(employee);
             return { ...state };

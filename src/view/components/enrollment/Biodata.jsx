@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
-import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { addEmployeeBiodata, selectEmployee } from "../../../application/store/actions/user";
 import { toast } from "react-toastify";
 import services from "../../../ioc/services";
+import { useNavigate } from "react-router-dom";
 
 const Biodata = () => {
     const user = useSelector(state => state.user);
@@ -14,6 +15,7 @@ const Biodata = () => {
     const [isEdit, setIsEdit] = useState(employee?.biodata !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const title = [
         { key: "Title", value: '' },
@@ -85,10 +87,12 @@ const Biodata = () => {
 
 
     const validationSchema = Yup.object({
-        firstName: Yup.string().required("First name is required"),
-        lastName: Yup.string().required("Last name is required"),
+        firstName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("First name is required"),
+        lastName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("Last name is required"),
         emailAddress: Yup.string().email('Must be a valid email').required("E-mail is required"),
-        phoneNumber: Yup.string().required("Phone number is required"),
+        phoneNumber: Yup.string()
+            .matches(/^0\d{10}$/, 'Phone number must be 11 digits and include a leading zero')
+            .required('Phone number is required'),
         dob: Yup.string().required("Date of Birth is required"),
         gender: Yup.string().required("Select Gender!"),
         title: Yup.string().required("Select title!"),
@@ -99,10 +103,10 @@ const Biodata = () => {
         residenceLga: Yup.string().required("Select Residence LGA!"),
         resStreetName: Yup.string().required("Street name is required!"),
         resHouseNumber: Yup.string().required("House number is required!"),
-        resCity: Yup.string().required("City is required!"),
-        perStreetName: Yup.string().required("Street name is required!"),
+        resCity: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("City is required!"),
+        perStreetName: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("Street name is required!"),
         perHouseNumber: Yup.string().required("House number is required!"),
-        perCity: Yup.string().required("City is required!"),
+        perCity: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("City is required!"),
     });
 
     const displayInput = [
@@ -200,6 +204,7 @@ const Biodata = () => {
             label: "house number",
             name: "resHouseNumber",
             control: "input",
+            type: 'number',
             placeholder: "Enter house number",
         },
         {
@@ -220,6 +225,7 @@ const Biodata = () => {
             label: "house number",
             name: "perHouseNumber",
             control: "input",
+            type: 'number',
             placeholder: "Enter house number",
         },
         {
@@ -255,7 +261,7 @@ const Biodata = () => {
         const payload = {
             data: biodata,
         }
-        dispatch(selectEmployee(user.employees.length+1));
+        dispatch(selectEmployee(user.employees.length + 1));
         dispatch(addEmployeeBiodata(payload));
         services.toast.success("Biodata Submitted Sucessfully!");
         setIsEdit(true);
@@ -294,8 +300,8 @@ const Biodata = () => {
                                     control={d.control}
                                 />
                             ))}
-
                         </div>
+
                         <div className="font-montserrat font-[500] text-[16px]">
                             <p className=" mt-[30px] py-[10px]">RESIDENTIAL ADDRESS</p>
                             <div className="grid gap-6 pt-4 md:justify-center md:gap-x-[12rem] md:gap-y-8 md:grid-cols-2" >
@@ -331,11 +337,13 @@ const Biodata = () => {
                             </div>
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed" : "cursor-pointer"} `} type="submit" disabled={isInputDisabled} />
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
-
+                            <div onClick={() => navigate('/nextofkin')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowForwardIos size={20} />
+                            </div>
                         </div>
 
                     </Form>

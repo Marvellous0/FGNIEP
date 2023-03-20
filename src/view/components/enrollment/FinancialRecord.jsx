@@ -2,18 +2,21 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployeeFinancialRecord } from "../../../application/store/actions/user";
 import services from "../../../ioc/services";
+import { useNavigate } from "react-router-dom";
 
 const FinancialRecord = () => {
     const user = useSelector(state => state.user);
     const employee = user.employees.find(e => e.id == user.enrollingUser);
     const [isEdit, setIsEdit] = useState(employee?.financialRecord !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
-
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
     const banks = [
         { key: "Bank", value: '' },
         { key: "GUARATEE TRUST BANK", value: "Kajola" },
@@ -35,7 +38,7 @@ const FinancialRecord = () => {
 
     const validationSchema = Yup.object({
         payrollId: Yup.string().required("Payroll Id is required"),
-        accountNumber: Yup.string().required("Account Number Id is required"),
+        accountNumber: Yup.string().matches(/\d{9}$/, 'Account number must be 10 digits').required("Account Number Id is required"),
         pfaPin: Yup.string().required("PFA pin is required"),
         bank: Yup.string().required("Select Bank!"),
         pfa: Yup.string().required("Select PFA!")
@@ -128,11 +131,13 @@ const FinancialRecord = () => {
 
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed" : "cursor-pointer"} `} type="submit" disabled={isInputDisabled} />
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
-
+                            <div onClick={() => navigate('/summary')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowForwardIos size={20} />
+                            </div>
                         </div>
 
                     </Form>

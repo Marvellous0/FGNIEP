@@ -2,10 +2,11 @@ import { Formik, Form } from "formik";
 import React, { useState } from "react";
 import * as Yup from 'yup';
 import FormikControl from "../formik/FormikControl";
-import { MdEdit, MdOutlineArrowBackIos } from 'react-icons/md';
+import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployeeServiceRecord } from "../../../application/store/actions/user";
 import services from "../../../ioc/services";
+import { useNavigate } from "react-router-dom";
 
 const ServiceRecord = () => {
     const user = useSelector(state => state.user);
@@ -13,6 +14,8 @@ const ServiceRecord = () => {
     const [isEdit, setIsEdit] = useState(employee?.serviceRecord !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const jobTitle = [
         { key: "Job Title", value: '' },
@@ -61,7 +64,7 @@ const ServiceRecord = () => {
     const validationSchema = Yup.object({
         jobTitle: Yup.string().required("Select Job Title!"),
         institution: Yup.string().required("Select Institution!"),
-        department: Yup.string().required("Department is required"),
+        department: Yup.string().matches(/^[A-Za-z ]*$/, 'Please enter alphabets only').required("Department is required"),
         dateOfFirstAppointment: Yup.string().required("Date Of First Appointment is required"),
         cadre: Yup.string().required("Cadre is required"),
         staffNumber: Yup.string().required("Staff Number is required"),
@@ -194,6 +197,9 @@ const ServiceRecord = () => {
                             <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
+                            </div>
+                            <div onClick={() => navigate('/financialrecord')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                                <MdOutlineArrowForwardIos size={20} />
                             </div>
                         </div>
 
