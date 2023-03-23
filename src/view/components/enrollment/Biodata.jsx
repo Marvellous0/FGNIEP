@@ -5,9 +5,8 @@ import FormikControl from "../formik/FormikControl";
 import { useDispatch, useSelector } from "react-redux";
 import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-icons/md';
 import { addEmployeeBiodata, selectEmployee } from "../../../application/store/actions/user";
-import { toast } from "react-toastify";
 import services from "../../../ioc/services";
-import { useNavigate, useParams, useRoutes } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Biodata = () => {
     const user = useSelector(state => state.user);
@@ -65,7 +64,7 @@ const Biodata = () => {
         { key: "Kajola", value: "Kajola" },
         { key: "Ojo", value: "Ojo" },
     ];
-    const [initialValues, setInitialValues] = useState({
+    const [initialValues] = useState({
         firstName: employee?.biodata?.firstName ?? "",
         lastName: employee?.biodata?.lastName ?? "",
         otherName: employee?.biodata?.otherName ?? "",

@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
@@ -31,7 +31,7 @@ const CreatePfaPage = () => {
         const pfa = {
             pfaName: values.pfaName,
         }
-        console.log("adding pfa")
+        console.log("adding pfa", pfa)
     }
 
     return (

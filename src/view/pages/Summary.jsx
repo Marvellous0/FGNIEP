@@ -8,7 +8,7 @@ const SummaryPage = () => {
     let {id} = param
     const user = useSelector(state => state.user);
     const employee = user[0].employees[id-1];
-    const status = employee?.nextOfKin == undefined;
+    const status = employee?.nextOfKin === undefined;
     const biodata = employee?.biodata;
     const [currentId, setCurrentId] = usePrintTag();
 
@@ -74,7 +74,6 @@ const SummaryPage = () => {
                
             </NavigationLayout>
         </>
-
     );
 }
 

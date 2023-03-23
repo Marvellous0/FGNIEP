@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
@@ -47,7 +47,7 @@ const CreateBankPage = () => {
             bankName: values.bankName,
             bankType: values.bankType
         }
-        console.log("adding bank")
+        console.log("adding bank", bank)
     }
 
     return (

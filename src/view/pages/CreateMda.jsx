@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
@@ -50,7 +50,7 @@ const CreateMdaPage = () => {
             capacity: values.capacity,
             address: values.address
         }
-        console.log("adding university")
+        console.log("adding university", mda)
     }
 
     return (

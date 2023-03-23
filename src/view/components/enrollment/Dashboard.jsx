@@ -97,7 +97,7 @@ const Dashboard = () => {
                                                 }
                                                 {key === "status" &&
                                                     <div className="flex items-center gap-2">
-                                                        <div className={`rounded-[100%] h-[10px] w-[10px] ${employee.status == "Progress" ? "bg-[blue]" : employee.status == "Incomplete" ? "bg-[orange]" : "bg-primary"}`}></div>
+                                                        <div className={`rounded-[100%] h-[10px] w-[10px] ${employee.status === "Progress" ? "bg-[blue]" : employee.status === "Incomplete" ? "bg-[orange]" : "bg-primary"}`}></div>
                                                         <span>{employee.status}</span>
                                                     </div>
                                                 }
@@ -109,7 +109,7 @@ const Dashboard = () => {
                                     <td className="">
                                         <button
                                             id={employee["id"]}
-                                            className={`font-[500] flex items-center mt-2 ${employee.status == "Completed" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] == "Completed"} onClick={(e) => update(e.target.id)}>
+                                            className={`font-[500] flex items-center mt-2 ${employee.status === "Completed" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] === "Completed"} onClick={(e) => update(e.target.id)}>
                                             Update
                                         </button>
                                     </td>

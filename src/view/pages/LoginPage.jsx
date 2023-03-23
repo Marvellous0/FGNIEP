@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +9,12 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
 
     const setPage = () => {
-        if (user[0].email == email && user[0].password == password) {
+        if (user[0].email === email && user[0].password === password) {
             localStorage.setItem('userDetails', JSON.stringify(user[0]));
             navigate("/dashboard")
         }
 
-        else if (user[1].email == email && user[1].password == password) {
+        else if (user[1].email === email && user[1].password === password) {
             localStorage.setItem('userDetails', JSON.stringify(user[1]));
             navigate("/admindashboard/mda")
         }

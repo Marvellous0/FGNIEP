@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import theme from "../../../application/utils/Theme";
 import { Field, ErrorMessage } from "formik";
-import { TextError, InputLabel, InputField } from "./MainInput"
+import { TextError } from "./MainInput"
 import InputLayout from "./InputLayout";
 
 const Dropdown = styled.select`

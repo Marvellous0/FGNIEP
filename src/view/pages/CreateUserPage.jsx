@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { MdOutlineArrowBackIos } from "react-icons/md";
 import { Formik, Form } from "formik";
 import * as Yup from 'yup';
@@ -61,7 +61,7 @@ const CreateUserPage = () => {
             username: values.username,
             role: values.role
         }
-        console.log("adding user")
+        console.log("adding user", user)
     }
 
     return (
