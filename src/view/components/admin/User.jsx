@@ -57,7 +57,7 @@ const users = [
 
 
 const User = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const navigate = useNavigate();
 
     return (

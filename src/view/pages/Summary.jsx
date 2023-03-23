@@ -10,7 +10,7 @@ const SummaryPage = () => {
     const employee = user[0].employees[id-1];
     const status = employee?.nextOfKin === undefined;
     const biodata = employee?.biodata;
-    const [currentId, setCurrentId] = usePrintTag();
+    const [ setCurrentId] = usePrintTag();
 
     return (
         <>

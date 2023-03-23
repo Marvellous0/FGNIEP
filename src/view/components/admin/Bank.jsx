@@ -42,7 +42,7 @@ const banks = [
 
 
 const Bank = () => {
-    const [loading, setLoading] = useState(false);
+    const [loading] = useState(false);
     const navigate = useNavigate();
 
     return (

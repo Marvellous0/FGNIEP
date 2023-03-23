@@ -1,4 +1,4 @@
 import * as userRequests from './user/userRequests'
 
-
-export default {userRequests};
+const request = userRequests;
+export default request;

@@ -10,7 +10,7 @@ const TopNav = ({ isNavHidden, setIsNavHidden }) => {
     let { id } = param
     const user = useSelector(state => state.user);
     const enrolling = user[0].employees[id - 1]
-    const [emp, setEmp] = useState(enrolling);
+    useState(enrolling);
     const loggedInUserDetails = JSON.parse(localStorage.getItem("userDetails"));
     const loggedInName = loggedInUserDetails.username;
 

@@ -101,7 +101,7 @@ const initialState = [
 ]
 
 
-export default (state = initialState, action) => {
+ const user =  (state = initialState, action) => {
     switch (action.type) {
         case (userActions.SELECT_EMPLOYEE_TO_ENROLL):
             return { ...state, enrollingUser: action.payload };
@@ -131,3 +131,4 @@ export default (state = initialState, action) => {
     }
 }
 
+export default user;

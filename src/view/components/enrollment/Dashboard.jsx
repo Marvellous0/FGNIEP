@@ -10,8 +10,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
-    const [loading, setLoading] = useState(false);
-    const [cleanData, setCleanData] = useState(user[0].employees);
+    const [loading] = useState(false);
+    const [cleanData] = useState(user[0].employees);
 
     const headings = ["Name", "Date", "Status", "Action"];
 
