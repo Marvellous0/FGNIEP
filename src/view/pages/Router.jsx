@@ -23,9 +23,7 @@ import CreateMdaPage from "./CreateMda";
 const Router = () => {
   const loginParams = ["/", "/login"]
   const adminParams = ["/admindashboard", "admindashboard/mda"]
-  const user = useSelector(state => state.user);
 
- 
   return (
     <HashRouter>
       <Routes>
@@ -66,19 +64,19 @@ const Router = () => {
           <Route path={"/dashboard"} element={<DashboardPage/>} ></Route>
         }
         {
-          <Route path={"/biodata"} element={<BiodataPage/>} ></Route>
+          <Route path={"/biodata/:id"} element={<BiodataPage/>} ></Route>
         }
         {
-          <Route path={"/nextofkin"} element={<NextOfKinPage/>} ></Route>
+          <Route path={"/nextofkin/:id"} element={<NextOfKinPage/>} ></Route>
         }
         {
-          <Route path={"/servicerecord"} element={<ServiceRecordPage/>} ></Route>
+          <Route path={"/servicerecord/:id"} element={<ServiceRecordPage/>} ></Route>
         }
         {
-          <Route path={"/financialrecord"} element={<FinancialRecordPage/>} ></Route>
+          <Route path={"/financialrecord/:id"} element={<FinancialRecordPage/>} ></Route>
         }
         {
-          <Route path={"/summary"} element={<SummaryPage/>} ></Route>
+          <Route path={"/summary/:id"} element={<SummaryPage/>} ></Route>
         }
         <Route path="*" element={<h1>Error 404</h1>} />
       </Routes>

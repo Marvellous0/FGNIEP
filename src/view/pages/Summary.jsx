@@ -1,10 +1,13 @@
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import usePrintTag from "../../application/hooks/usePrintTag";
 import NavigationLayout from "../layouts/NavigationLayout";
 
 const SummaryPage = () => {
+    const param = useParams()
+    let {id} = param
     const user = useSelector(state => state.user);
-    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const employee = user[0].employees[id-1];
     const status = employee?.nextOfKin == undefined;
     const biodata = employee?.biodata;
     const [currentId, setCurrentId] = usePrintTag();

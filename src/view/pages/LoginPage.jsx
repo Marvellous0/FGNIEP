@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,13 +8,17 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [role, setRole] = useState('user')
 
     const setPage = () => {
-        if (user.email == email && user.password == password) {           
-            user?.role == "user"? navigate("/dashboard") : navigate("/admindashboard/mda") 
+        if (user[0].email == email && user[0].password == password) {
+            localStorage.setItem('userDetails', JSON.stringify(user[0]));
+            navigate("/dashboard")
         }
-       
+
+        else if (user[1].email == email && user[1].password == password) {
+            localStorage.setItem('userDetails', JSON.stringify(user[1]));
+            navigate("/admindashboard/mda")
+        }
     }
 
     return (

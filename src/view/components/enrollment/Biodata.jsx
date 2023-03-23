@@ -7,11 +7,13 @@ import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-i
 import { addEmployeeBiodata, selectEmployee } from "../../../application/store/actions/user";
 import { toast } from "react-toastify";
 import services from "../../../ioc/services";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useRoutes } from "react-router-dom";
 
 const Biodata = () => {
     const user = useSelector(state => state.user);
-    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const param = useParams()
+    let {id} = param
+    const employee = user[0].employees[id-1]
     const [isEdit, setIsEdit] = useState(employee?.biodata !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
@@ -341,7 +343,7 @@ const Biodata = () => {
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
-                            <div onClick={() => navigate('/nextofkin')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                            <div onClick={() => navigate(`/nextofkin/${id}`)} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowForwardIos size={20} />
                             </div>
                         </div>

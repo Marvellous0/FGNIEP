@@ -7,7 +7,6 @@ import TopNav from '../containers/TopNav';
 const NavigationLayout = ({ children }) => {
     const [isNavHidden, setIsNavHidden] = useState(true);
    
-    
     return (
         <div className={`bg-secondary h-[100vh] w-[100vw] flex flex-col`}>
             <div className="h-[100%] md:mx-0 md:my-auto min-w-[300px] w-full flex gap-[2px]">

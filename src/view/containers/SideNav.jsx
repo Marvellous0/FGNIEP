@@ -3,7 +3,7 @@ import { FaRegFileAlt, FaRegMoneyBillAlt, FaUsers, FaRegUser, FaTimes } from 're
 import { BiHomeAlt } from 'react-icons/bi';
 import { MdOutlineSummarize } from 'react-icons/md';
 import { AiOutlineBank } from 'react-icons/ai'
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { TfiMenuAlt } from 'react-icons/tfi'
 
@@ -11,7 +11,11 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
     const user = useSelector(state => state.user);
     const location = useLocation();
     const navigate = useNavigate();
+    const param = useParams()
+    let { id } = param
     const activeSideOption = location.pathname.split("/")[1];
+    const loggedInUserDetails = JSON.parse(localStorage.getItem("userDetails"));
+    const loggedInRole = loggedInUserDetails.role;
 
     const changeActiveSideOption = (link) => {
         navigate(link)
@@ -19,7 +23,7 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
 
     }
 
-    const navOptions = user?.role == "admin" ?
+    const navOptions = loggedInRole == "admin" ?
         [
             {
                 displayText: "MDA",
@@ -61,7 +65,7 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
             {
                 displayText: "Biodata",
                 action: "biodata",
-                link: "/biodata",
+                link: `/biodata/${id}`,
                 isActive: false,
 
                 icon: FaRegUser,
@@ -69,28 +73,28 @@ const SideNav = ({ isNavHidden, setIsNavHidden }) => {
             {
                 displayText: "Next Of Kin",
                 action: "nextofkin",
-                link: "/nextofkin",
+                link: `/nextofkin/${id}`,
                 isActive: false,
                 icon: FaUsers,
             },
             {
                 displayText: "Service Record",
                 action: "servicerecord",
-                link: "/servicerecord",
+                link: `/servicerecord/${id}`,
                 isActive: false,
                 icon: FaRegFileAlt,
             },
             {
                 displayText: "Financial Record",
                 action: "financialrecord",
-                link: "/financialrecord",
+                link: `/financialrecord/${id}`,
                 isActive: false,
                 icon: FaRegMoneyBillAlt,
             },
             {
                 displayText: "Summary",
                 action: "summary",
-                link: "/summary",
+                link: `/summary/${id}`,
                 isActive: false,
                 icon: MdOutlineSummarize,
             },

@@ -2,43 +2,41 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { igate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEmployee } from "../../../application/store/actions/user";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector(state => state.user);
-    const enrolling = user.employees.find(e => e.id == user.enrollingUser);
     const [loading, setLoading] = useState(false);
-    const [cleanData, setCleanData] = useState(user.employees);
+    const [cleanData, setCleanData] = useState(user[0].employees);
 
     const headings = ["Name", "Date", "Status", "Action"];
 
     const update = (employeeId) => {
         dispatch(selectEmployee(employeeId))
-        const current = user.employees.find(e => e.id == employeeId)
+        const current = user[0].employees[employeeId - 1]
         if (current?.financialRecord !== undefined) {
-            navigate("/summary");
+            navigate(`/summary/${employeeId}`);
         }
         else if (current?.serviceRecord !== undefined) {
-            navigate("/financialrecord");
+            navigate(`/financialrecord/${employeeId}`);
         }
         else if (current?.nextOfKin !== undefined) {
-            navigate("/servicerecord");
+            navigate(`/servicerecord/${employeeId}`);
         }
         else if (current?.biodata !== undefined) {
-            navigate("/nextofkin");
+            navigate(`/nextofkin/${employeeId}`);
         }
-        else{
-            navigate("/biodata");
+        else {
+            navigate(`/biodata/${employeeId}`);
         }
     }
-    const add = () =>{
+    const add = () => {
         dispatch(selectEmployee(null))
-        navigate("/biodata")
+        navigate(`/biodata/${4}`)
     }
     const employeeRep = {
         id: '',
@@ -111,7 +109,7 @@ const Dashboard = () => {
                                     <td className="">
                                         <button
                                             id={employee["id"]}
-                                            className={`font-[500] flex items-center mt-2 ${employee["status"] == "Completed" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] == "Completed"} onClick={(e) => update(e.target.id)}>
+                                            className={`font-[500] flex items-center mt-2 ${employee.status == "Completed" ? " cursor-not-allowed text-[gray]" : "cursor-pointer text-primary"}`} disabled={employee["status"] == "Completed"} onClick={(e) => update(e.target.id)}>
                                             Update
                                         </button>
                                     </td>
@@ -125,74 +123,6 @@ const Dashboard = () => {
                     </tbody>
                 </table>
             </div>
-            {/* {cleanData.length ? (
-                <div className="flex flex-col gap-y-6 w-full items-center ">
-                    <div className="w-full flex justify-center sm:justify-end">
-                        <div className="flex border border-[#CED4DB] rounded">
-                            <div className="py-[6px] px-7 border-r border-[#CED4DB]">
-                                <span className="font-medium text-sm leading-5">
-                                    <span className="text-black">
-                                        {startNumber > 9 ? startNumber : `0${startNumber}`}-
-                                        {endNumber > 9 ? endNumber : `0${endNumber}`}
-                                    </span>{" "}
-                                    <span className="text-[#BCC3CC]">of {totalPages}</span>
-                                </span>
-                            </div>
-                            <div className="text-[#021059] text-xl flex items-center">
-                                <button
-                                    disabled={loading || parseInt(filter.page) === 1}
-                                    className={`px-3 py-1 border-r border-[#CED4DB] ${loading || parseInt(filter.page) === 1
-                                        ? "text-[#021059]/40"
-                                        : ""
-                                        }`}
-                                    onClick={() => {
-                                        setFilter({
-                                            ...filter,
-                                            page: filter.page - 1
-                                        });
-                                    }}
-                                >
-                                    <MdChevronLeft />
-                                </button>
-                                <button
-                                    disabled={loading || endNumber === totalPages}
-                                    className={`px-3 py-1 ${loading || endNumber === totalPages
-                                        ? "text-[#021059]/40"
-                                        : ""
-                                        }`}
-                                    onClick={() => {
-                                        setFilter({
-                                            ...filter,
-                                            page: filter.page + 1
-                                        });
-                                    }}
-                                >
-                                    <MdChevronRight />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="sm:hidden max-w-[180px] w-full ">
-                        <CSVLink
-                            headers={headers}
-                            data={csvData}
-                            filename={`oddience-employee-history-${new Date().toISOString()}.csv`}
-                        >
-                            <Button
-                                disabled={cleanData.length <= 0 || loading}
-                                label="Download CSV"
-                                prefix={<FiDownload className="inline text-xl font-light" />}
-                                variant="alt"
-                                fullWidth
-                                className="leading-5"
-                                size="sm"
-                            />
-                        </CSVLink>
-                    </div>
-                </div>
-            ) : (
-                ""
-            )} */}
         </div >
     );
 };

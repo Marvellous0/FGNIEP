@@ -6,11 +6,13 @@ import { MdEdit, MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from 'react-i
 import { useDispatch, useSelector } from "react-redux";
 import { addEmployeeServiceRecord } from "../../../application/store/actions/user";
 import services from "../../../ioc/services";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ServiceRecord = () => {
-    const user = useSelector(state => state.user);
-    const employee = user.employees.find(e => e.id == user.enrollingUser);
+    const user = useSelector(state => state.user); 
+    const param = useParams()
+    let { id } = param
+    const employee = user[0].employees[id - 1];
     const [isEdit, setIsEdit] = useState(employee?.serviceRecord !== undefined);
     const [isInputDisabled, setIsInputDisabled] = useState(isEdit);
     const dispatch = useDispatch();
@@ -194,11 +196,11 @@ const ServiceRecord = () => {
                             ))}
                         </div>
                         <div className="flex justify-end my-[30px] gap-[10px]">
-                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed": "cursor-pointer"} `} type="submit" disabled={isInputDisabled}/>
+                            <input value={isEdit ? "EDIT" : "SUBMIT"} className={`text-center bg-primary py-[10px] px-[20px] font-[500] text-white ${isInputDisabled ? "cursor-not-allowed" : "cursor-pointer"} `} type="submit" disabled={isInputDisabled} />
                             <div onClick={() => window.history.back()} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowBackIos size={20} />
                             </div>
-                            <div onClick={() => navigate('/financialrecord')} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
+                            <div onClick={() => navigate(`/financialrecord/${id}`)} className="bg-[white] text-[#8d98af] cursor-pointer p-[10px]">
                                 <MdOutlineArrowForwardIos size={20} />
                             </div>
                         </div>
