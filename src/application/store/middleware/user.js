@@ -4,7 +4,6 @@ const test = ({ log }) => ({ dispatch }) => next => action => {
     log("test")
 }
 
-
 export default [
     test
 ]

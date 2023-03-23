@@ -101,7 +101,7 @@ const initialState = [
 ]
 
 
- const user =  (state = initialState, action) => {
+export default (state = initialState, action) => {
     switch (action.type) {
         case (userActions.SELECT_EMPLOYEE_TO_ENROLL):
             return { ...state, enrollingUser: action.payload };
@@ -114,16 +114,16 @@ const initialState = [
             state.employees.push(employee);
             return { ...state };
         case (userActions.ADD_EMPLOYEE_NEXTOFKIN):
-            const employee2 = state.employees.find(e => e.id === action.payload.employeeId);
-            console.log(employee2);
+            const employee2 = state.employees.find(e => e.id == action.payload.employeeId);
+            console.log(employee2)
             employee2.nextOfKin = action.payload.data;
             return { ...state };
         case (userActions.ADD_EMPLOYEE_SERVICE_RECORD):
-            const employee3 = state.employees.find(e => e.id === action.payload.employeeId);
+            const employee3 = state.employees.find(e => e.id == action.payload.employeeId);
             employee3.serviceRecord = action.payload.data;
             return { ...state };
         case (userActions.ADD_EMPLOYEE_FINANCIAL_RECORD):
-            const employee4 = state.employees.find(e => e.id === action.payload.employeeId);
+            const employee4 = state.employees.find(e => e.id == action.payload.employeeId);
             employee4.financialRecord = action.payload.data;
             return { ...state };
         default:
@@ -131,4 +131,3 @@ const initialState = [
     }
 }
 
-export default user;
