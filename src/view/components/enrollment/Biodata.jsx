@@ -262,7 +262,7 @@ const Biodata = () => {
         const payload = {
             data: biodata,
         }
-        dispatch(selectEmployee(user.employees.length + 1));
+        dispatch(selectEmployee(user[0].employees.length + 1));
         dispatch(addEmployeeBiodata(payload));
         services.toast.success("Biodata Submitted Sucessfully!");
         setIsEdit(true);
