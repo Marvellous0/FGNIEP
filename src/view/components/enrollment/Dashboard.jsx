@@ -65,8 +65,8 @@ const Dashboard = () => {
     }
 
     const add = () => {
-        dispatch(selectEmployee(4))
-        navigate(`/biodata/${4}`)
+        dispatch(selectEmployee(cleanData.length + 1))
+        navigate(`/biodata/${cleanData.length + 1}`)
     }
     const employeeRep = {
         id: '',
